@@ -1,20 +1,20 @@
+import gradio as gr
 from teacher import AITeacher
 
 teacher = AITeacher("physics_dataset.json")
 
-print("=" * 50)
-print("Physics AI Teacher")
-print("Type 'exit' to quit")
-print("=" * 50)
+def ask(question):
+    return teacher.answer_question(question)
 
-while True:
+demo = gr.Interface(
+    fn=ask,
+    inputs=gr.Textbox(
+        label="Ask Physics Question"
+    ),
+    outputs=gr.Textbox(
+        label="AI Teacher Answer"
+    ),
+    title="Physics AI Teacher"
+)
 
-    question = input("\nAsk Physics Question: ")
-
-    if question.lower() == "exit":
-        break
-
-    answer = teacher.answer_question(question)
-
-    print("\nAI Teacher:")
-    print(answer)
+demo.launch()
